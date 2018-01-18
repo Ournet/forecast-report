@@ -1,0 +1,46 @@
+{
+  "name": "forecast-report",
+  "version": "0.0.1",
+  "description": "Weather forecast report",
+  "main": "./lib/index.js",
+  "types": "./types/index.d.ts",
+  "scripts": {
+    "pretest": "npm run clean && npm run tsc",
+    "test": "ava --no-cache --verbose  ./lib/*.test.js ./lib/**/*.test.js",
+    "posttest": "npm run clean-test-code",
+    "tsc": "tsc",
+    "tscw": "tsc -w",
+    "preversion": "npm run tsc",
+    "postversion": "git push --follow-tags",
+    "prepublish": "npm run tsc && npm run clean-test-code",
+    "clean": "rm -fr ./lib && rm -fr ./types",
+    "clean-test-code": "rm -fr ./lib/**/*.test.js && rm -fr ./lib/*.test.js && rm -fr ./types/**/*.test.d.ts && rm -fr ./types/*.test.d.ts",
+    "build": "npm run tsc && npm run test"
+  },
+  "engines": {
+    "node": ">=6.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Ournet/forecast-report-js.git"
+  },
+  "keywords": [
+    "weather",
+    "forecast",
+    "report"
+  ],
+  "author": "Dumitru Cantea",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Ournet/forecast-report-js/issues"
+  },
+  "homepage": "https://github.com/Ournet/forecast-report-js#readme",
+  "dependencies": {
+  },
+  "devDependencies": {
+    "@types/node": "^6.x.x",
+    "ava": "^0.23.0",
+    "debug": "^3.1.0",
+    "typescript": "^2.6.1"
+  }
+}
