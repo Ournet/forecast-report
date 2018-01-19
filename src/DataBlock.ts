@@ -1,9 +1,9 @@
 
-import { DataPoint, DailyDataPoint, HourlyDataPoint } from './DataPoint';
+import { DataPoint, DailyDataPoint, HourlyDataPoint, IntervalDataPoint } from './DataPoint';
 import { ForecastIcon } from './icon';
 import { ForecastTimePeriod } from './common';
 
-export type DataBlock = DailyDataBlock | HourlyDataBlock;
+export type DataBlock = DailyDataBlock | HourlyDataBlock | IntervalDataBlock;
 
 export interface BaseDataBlock {
     period: ForecastTimePeriod
@@ -11,6 +11,11 @@ export interface BaseDataBlock {
     night?: boolean
     summary?: string
     data: DataPoint[]
+}
+
+export interface IntervalDataBlock extends BaseDataBlock {
+    period: ForecastTimePeriod.DAILY
+    data: IntervalDataPoint[]
 }
 
 export interface DailyDataBlock extends BaseDataBlock {

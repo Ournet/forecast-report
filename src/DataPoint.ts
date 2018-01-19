@@ -25,27 +25,36 @@ export interface BaseDataPoint {
     windSpeed?: number
 }
 
-export interface DailyDataPoint extends BaseDataPoint {
+export interface HourlyDataPoint extends BaseDataPoint {
+    
+}
+
+export interface IntervalDataPoint extends BaseDataPoint {
+    /** 1 - for a hour, 2 - for next two hours, 3 - for next 3 hours, etc. */
+    hours?: number
+
     apparentTemperature?: number
     apparentTemperatureHigh?: number
     apparentTemperatureHighTime?: number
     apparentTemperatureLow?: number
     apparentTemperatureLowTime?: number
-    moonPhase?: number
+
     precipIntensityMax?: number
     precipIntensityMaxTime?: number
-    sunriseTime?: number
-    sunsetTime?: number
+
     temperatureHigh?: number
     temperatureHighTime?: number
     temperatureLow?: number
     temperatureLowTime?: number
+
     uvIndexTime?: number
 }
 
-export interface HourlyDataPoint extends BaseDataPoint {
-    /** Time span: 1 - for a your, 2 - for next two yours, 3 - for next 3 hours, etc. */
-    // timeSpan?: number
+export interface DailyDataPoint extends IntervalDataPoint {
+    moonPhase?: number
+
+    sunriseTime?: number
+    sunsetTime?: number
 }
 
 export enum PrecipTypeEnum {

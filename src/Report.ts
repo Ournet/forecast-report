@@ -1,5 +1,5 @@
 
-import { HourlyDataBlock, DailyDataBlock } from './DataBlock';
+import { HourlyDataBlock, DailyDataBlock, IntervalDataBlock } from './DataBlock';
 
 
 export interface Report {
@@ -8,7 +8,7 @@ export interface Report {
     units: ReportUnits
 
     hourly?: HourlyDataBlock
-    details?: HourlyDataBlock
+    details?: IntervalDataBlock
     daily?: DailyDataBlock
 }
 
