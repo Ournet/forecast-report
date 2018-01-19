@@ -8,6 +8,7 @@ export interface BaseDataPoint {
     dewPoint?: number
     humidity?: number
     icon: ForecastIcon
+    night?: boolean
     ozone?: number
     precipAccumulation?: number
     precipIntensity?: number

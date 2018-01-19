@@ -8,6 +8,7 @@ export type DataBlock = DailyDataBlock | HourlyDataBlock;
 export interface BaseDataBlock {
     period: ForecastTimePeriod
     icon: ForecastIcon
+    night?: boolean
     summary?: string
     data: DataPoint[]
 }
