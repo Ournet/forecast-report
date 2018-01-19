@@ -44,7 +44,7 @@ export interface DailyDataPoint extends BaseDataPoint {
 
 export interface HourlyDataPoint extends BaseDataPoint {
     /** Time span: 1 - for a your, 2 - for next two yours, 3 - for next 3 hours, etc. */
-    timeSpan?: number
+    // timeSpan?: number
 }
 
 export enum PrecipTypeEnum {
