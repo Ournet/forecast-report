@@ -36,6 +36,7 @@
   },
   "homepage": "https://github.com/Ournet/forecast-report-js#readme",
   "dependencies": {
+    "suncalc": "^1.8.0"
   },
   "devDependencies": {
     "@types/node": "^6.x.x",

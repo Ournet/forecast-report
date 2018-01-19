@@ -1,7 +1,43 @@
-import { PrecipTypeEnum, IntervalDataPoint, BaseDataPoint } from './DataPoint';
-
+import { PrecipTypeEnum, IntervalDataPoint, BaseDataPoint, HourlyDataPoint, DailyDataPoint } from './DataPoint';
+import { GeoPoint } from './common';
+const SunCalc = require('suncalc');
 
 export class ReportHelpers {
+
+    static dailyDataPoint(data: HourlyDataPoint[], geoPoint: GeoPoint): DailyDataPoint {
+        const dayDataPoint = <DailyDataPoint>ReportHelpers.intervalDataPoint(data);
+
+        const date = new Date(dayDataPoint.time * 1000);
+
+        const sun = ReportHelpers.getSun(date, geoPoint);
+        const moon = ReportHelpers.getMoon(date);
+
+        dayDataPoint.sunriseTime = sun.sunrise;
+        dayDataPoint.sunsetTime = sun.sunset;
+        dayDataPoint.moonPhase = moon.phase;
+
+        return dayDataPoint;
+    }
+
+    static getSun(date: Date, geoPoint: GeoPoint): { sunrise: number, sunset: number } {
+        const times = SunCalc.getTimes(date, geoPoint.latitude, geoPoint.longitude);
+        let sunrise = Math.round(times.sunrise.getTime() / 1000);
+        let sunset = Math.round(times.sunset.getTime() / 1000);
+
+        return {
+            sunrise,
+            sunset
+        };
+    }
+
+    static getMoon(date: Date): { fraction: number, phase: number } {
+        const moon = SunCalc.getMoonIllumination(date);
+
+        return {
+            fraction: moon.fraction,
+            phase: moon.phase
+        };
+    }
 
     static intervalDataPoint(data: BaseDataPoint[]): IntervalDataPoint {
         if (!data || !data.length) {
