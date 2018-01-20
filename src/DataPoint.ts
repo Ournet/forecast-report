@@ -17,7 +17,7 @@ export interface BaseDataPoint {
     pressure?: number
     summary?: string
     temperature: number
-    time: number
+    time: Date
     uvIndex?: number
     visibility?: number
     windBearing?: number
@@ -35,26 +35,26 @@ export interface IntervalDataPoint extends BaseDataPoint {
 
     apparentTemperature?: number
     apparentTemperatureHigh?: number
-    apparentTemperatureHighTime?: number
+    apparentTemperatureHighTime?: Date
     apparentTemperatureLow?: number
-    apparentTemperatureLowTime?: number
+    apparentTemperatureLowTime?: Date
 
     precipIntensityMax?: number
     precipIntensityMaxTime?: number
 
     temperatureHigh?: number
-    temperatureHighTime?: number
+    temperatureHighTime?: Date
     temperatureLow?: number
-    temperatureLowTime?: number
+    temperatureLowTime?: Date
 
-    uvIndexTime?: number
+    uvIndexTime?: Date
 }
 
 export interface DailyDataPoint extends IntervalDataPoint {
     moonPhase?: number
 
-    sunriseTime?: number
-    sunsetTime?: number
+    sunriseTime?: Date
+    sunsetTime?: Date
 }
 
 export enum PrecipTypeEnum {

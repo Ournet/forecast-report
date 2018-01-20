@@ -1,5 +1,5 @@
 {
-  "name": "forecast-report",
+  "name": "@ournet/forecast-report",
   "version": "0.0.1",
   "description": "Weather forecast report",
   "main": "./lib/index.js",

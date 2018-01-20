@@ -6,6 +6,7 @@ export interface Report {
     latitude: number
     longitude: number
     units: ReportUnits
+    timezone: string
 
     hourly?: HourlyDataBlock
     details?: IntervalDataBlock

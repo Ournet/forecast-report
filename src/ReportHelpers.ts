@@ -1,13 +1,41 @@
 import { PrecipTypeEnum, IntervalDataPoint, BaseDataPoint, HourlyDataPoint, DailyDataPoint } from './DataPoint';
-import { GeoPoint } from './common';
+import { GeoPoint, ForecastTimePeriod } from './common';
+import { DailyDataBlock } from './DataBlock';
+import { ForecastIcon } from './icon';
+
 const SunCalc = require('suncalc');
 
 export class ReportHelpers {
 
+    static dailyDataBlock(data: HourlyDataPoint[], geoPoint: GeoPoint) {
+
+        const dailyDataBlock: DailyDataBlock = {
+            period: ForecastTimePeriod.DAILY,
+            icon: ReportHelpers.mostPopularIcon(data),
+            data: null
+        };
+
+        let currentData: IntervalDataPoint[] = [];
+        const dataByDays = data.reduce<DailyDataPoint[]>((result, current) => {
+            if (currentData.length && currentData[currentData.length - 1].time.getDate() !== current.time.getDate()) {
+                result.push(ReportHelpers.dailyDataPoint(currentData, geoPoint));
+                currentData = [];
+            } else {
+                currentData.push(current);
+            }
+
+            return result;
+        }, []);
+
+        dailyDataBlock.data = dataByDays;
+
+        return dailyDataBlock;
+    }
+
     static dailyDataPoint(data: HourlyDataPoint[], geoPoint: GeoPoint): DailyDataPoint {
         const dayDataPoint = <DailyDataPoint>ReportHelpers.intervalDataPoint(data);
 
-        const date = new Date(dayDataPoint.time * 1000);
+        const date = dayDataPoint.time;
 
         const sun = ReportHelpers.getSun(date, geoPoint);
         const moon = ReportHelpers.getMoon(date);
@@ -19,15 +47,10 @@ export class ReportHelpers {
         return dayDataPoint;
     }
 
-    static getSun(date: Date, geoPoint: GeoPoint): { sunrise: number, sunset: number } {
+    static getSun(date: Date, geoPoint: GeoPoint): { sunrise: Date, sunset: Date } {
         const times = SunCalc.getTimes(date, geoPoint.latitude, geoPoint.longitude);
-        let sunrise = Math.round(times.sunrise.getTime() / 1000);
-        let sunset = Math.round(times.sunset.getTime() / 1000);
 
-        return {
-            sunrise,
-            sunset
-        };
+        return { sunrise: times.sunrise, sunset: times.sunset };
     }
 
     static getMoon(date: Date): { fraction: number, phase: number } {
@@ -56,13 +79,13 @@ export class ReportHelpers {
         let pressure = 0;
         let uvIndex = 0;
         let uvIndexMax = 0;
-        let uvIndexTime = 0;
+        let uvIndexTime: Date;
         let visibility = 0;
         let windGust = 0;
         let windSpeed = 0;
         let hours = 0;
 
-        const tempData: { high: number, highTime: number, low: number, lowTime: number }
+        const tempData: { high: number, highTime: Date, low: number, lowTime: Date }
             = data.reduce((prev, current) => {
                 const high = (<IntervalDataPoint>current).temperatureHigh;
                 // has interval high
@@ -91,7 +114,7 @@ export class ReportHelpers {
                     }
                 }
                 return prev;
-            }, { high: 0, highTime: 0, low: 100, lowTime: 0 });
+            }, { high: 0, highTime: null, low: 100, lowTime: null });
 
         data.forEach(item => {
             cloudCover += (item.cloudCover || 0);
@@ -169,4 +192,20 @@ export class ReportHelpers {
         return dataPoint;
     }
 
+    static mostPopularIcon(data: BaseDataPoint[]): ForecastIcon {
+        const popularity: { [index: string]: number } = {};
+        let mostPopularIcon: ForecastIcon;
+        let mostPopularIconCount = 0;
+
+        data.forEach(item => {
+            popularity[item.icon] = popularity[item.icon] || 0;
+            popularity[item.icon]++;
+            if (popularity[item.icon] > mostPopularIconCount) {
+                mostPopularIconCount = popularity[item.icon];
+                mostPopularIcon = item.icon;
+            }
+        });
+
+        return mostPopularIcon;
+    }
 }

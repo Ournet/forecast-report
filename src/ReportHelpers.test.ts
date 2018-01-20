@@ -9,6 +9,5 @@ test('getSun', t => {
 
 test('getMoon', t => {
     const moon = ReportHelpers.getMoon(new Date());
-    console.log(moon);
     t.is(true, !!moon);
 });
