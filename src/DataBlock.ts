@@ -14,7 +14,7 @@ export interface BaseDataBlock {
 }
 
 export interface HoursDataBlock extends BaseDataBlock {
-    period: ForecastTimePeriod.DAILY
+    period: ForecastTimePeriod.HOURLY
     data: HoursDataPoint[]
 }
 
