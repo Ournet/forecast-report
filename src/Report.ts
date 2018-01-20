@@ -1,18 +1,15 @@
 
-import { HourlyDataBlock, DailyDataBlock, IntervalDataBlock } from './DataBlock';
+import { HourlyDataBlock, DailyDataBlock, HoursDataBlock } from './DataBlock';
+import { ForecastUnits } from './common';
 
 
 export interface Report {
     latitude: number
     longitude: number
-    units: ReportUnits
+    units: ForecastUnits
     timezone: string
 
     hourly?: HourlyDataBlock
-    details?: IntervalDataBlock
+    details?: HoursDataBlock
     daily?: DailyDataBlock
-}
-
-export enum ReportUnits {
-    SI = 'si'
 }

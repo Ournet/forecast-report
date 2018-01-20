@@ -1,6 +1,7 @@
 
-export { DataPoint, PrecipTypeEnum, DailyDataPoint, HourlyDataPoint, IntervalDataPoint } from './DataPoint';
-export { DataBlock, DailyDataBlock, HourlyDataBlock, IntervalDataBlock } from './DataBlock';
+export { DataPoint, PrecipTypeEnum, DailyDataPoint, HourlyDataPoint, HoursDataPoint } from './DataPoint';
+export { DataBlock, DailyDataBlock, HourlyDataBlock, HoursDataBlock } from './DataBlock';
 export { ForecastIcon } from './icon';
-export { ForecastTimePeriod } from './common';
-export { Report, ReportUnits } from './Report';
+export { ForecastTimePeriod, ForecastUnits, GeoPoint } from './common';
+export { Report } from './Report';
+export { ReportHelpers } from './ReportHelpers';
